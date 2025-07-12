@@ -35,15 +35,7 @@ router.post('/upload', upload.array('images', 5), async (req, res) => {
       req.files.map((file) => streamUpload(file.buffer, file.originalname))
     );
 
-    const item = new Item({
-      title: req.body.title,
-      description: req.body.description,
-      images: urls,
-      uploader: req.body.uploader,
-    });
-
-    await item.save();
-    res.status(201).json(item);
+    res.status(200).json({ imageUrls: urls });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Upload failed', error: err.message });
