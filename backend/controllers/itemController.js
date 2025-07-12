@@ -52,3 +52,19 @@ exports.deleteItem = async (req, res) => {
     res.status(500).json({ error: 'Error deleting item', details: err.message });
   }
 };
+
+exports.updateItemStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!['approved', 'rejected'].includes(status)) {
+      return res.status(400).json({ message: 'Invalid status' });
+    }
+
+    await knex('items').where({ id }).update({ status });
+    res.json({ message: `Item ${status}` });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update item status', details: err.message });
+  }
+};

@@ -13,6 +13,8 @@ app.use(express.json());
 const authRoutes = require('./routes/authRoutes');
 const protectedRoutes = require('./routes/testProtected'); // ✅ Protected route
 const itemRoutes = require('./routes/itemRoutes');
+const swapRoutes = require('./routes/swapRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 // ✅ Logger for auth
 app.use('/api/auth', (req, res, next) => {
@@ -24,6 +26,10 @@ app.use('/api/auth', (req, res, next) => {
 app.use('/api', protectedRoutes);
 
 app.use('/api', itemRoutes);
+
+app.use('/api', swapRoutes);
+
+app.use('/api', userRoutes);
 
 // Test route
 app.get('/', (req, res) => res.send('ReWear Backend is running!'));
