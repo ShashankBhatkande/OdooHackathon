@@ -38,13 +38,18 @@ exports.login = async (req, res) => {
     if (!match) return res.status(401).json({ message: 'Incorrect password' });
 
     const token = jwt.sign(
-      { id: user.id, email: user.email, role: user.role },
+      {
+        id: user.id,
+        email: user.email,
+        role: user.role
+      },
       JWT_SECRET,
       { expiresIn: '2h' }
     );
 
-    return res.json({ token });
+    res.json({ token });
   } catch (err) {
-    return res.status(500).json({ error: 'Login failed' });
+    console.error('❌ Login error:', err);
+    res.status(500).json({ error: 'Login failed' });
   }
 };
